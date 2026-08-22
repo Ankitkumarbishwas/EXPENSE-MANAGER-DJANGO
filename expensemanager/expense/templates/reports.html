@@ -1,0 +1,810 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="px-4 md:px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                    <div class="w-9 h-9 flex items-center justify-center">
+                        <img src="{% static 'wallet.png' %}" alt="Expense Manager"
+                            class="h-full w-auto object-contain">
+                    </div>
+
+                    <span class="text-xl font-bold text-gray-900">
+                        Expense <span class="text-indigo-600">Manager</span>
+                    </span>
+                </a>
+
+                <nav class="flex justify-between gap-8">
+
+                    <a href="{% url 'dashboard' %}"
+                        class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Dashboard
+                    </a>
+
+                    <a href="{% url 'add_category' %}"
+                        class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Category
+                    </a>
+
+                    <a href="{% url 'add_expense' %}"
+                        class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Expense
+                    </a>
+
+                    <a href="{% url 'set_budget' %}"
+                        class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Budget
+                    </a>
+
+                    <a href="{% url 'reports' %}"
+                        class="text-sm font-medium text-indigo-600">
+                        Reports
+                    </a>
+
+                    <a href="#"
+                        class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        About
+                    </a>
+
+                </nav>
+
+                <div class="flex items-center gap-3">
+
+                    {% if request.user.is_authenticated %}
+
+                    <div class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-7 py-1.5 shadow-sm">
+
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+
+                            {% if request.user.first_name %}
+                                {{ request.user.first_name|first|upper }}
+                            {% else %}
+                                {{ request.user.username|first|upper }}
+                            {% endif %}
+
+                        </div>
+
+                        <div class="flex flex-col leading-tight">
+
+                            <span class="text-sm font-semibold text-gray-800">
+
+                                {% if request.user.first_name %}
+                                    {{ request.user.first_name }}
+                                    {% if request.user.last_name %}
+                                        {{ request.user.last_name }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ request.user.username }}
+                                {% endif %}
+
+                            </span>
+
+                            <span class="text-[11px] text-gray-500">
+                                {{ request.user.email }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'logout' %}"
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
+                        Logout
+                    </a>
+
+                    {% else %}
+
+                    <div class="flex items-center gap-3">
+
+                        <a href="{% url 'login' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+
+                            Login
+                        </a>
+
+                        <a href="{% url 'register' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+
+                            Register
+                        </a>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+
+        <section class="mb-8">
+
+            <h1 class="text-3xl font-bold text-gray-900">
+                Expense Reports
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+                Analyze your spending and understand your expenses.
+            </p>
+
+        </section>
+
+
+        <section class="bg-white rounded-xl border border-gray-100 shadow-sm mb-8">
+
+            <div class="px-6 py-5 border-b border-gray-100">
+
+                <h2 class="text-lg font-semibold">
+                    Filter Reports
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Select the period and filters you want to analyze.
+                </p>
+
+            </div>
+
+            <form method="GET" action="{% url 'reports' %}" class="p-6">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    <div>
+
+                        <label class="block text-sm font-medium mb-2">
+                            Year
+                        </label>
+
+                        <select name="year"
+                            class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50">
+
+                            <option value="">
+                                All Years
+                            </option>
+
+                            {% for year in years %}
+
+                            <option value="{{ year }}"
+                                {% if selected_year|stringformat:"s" == year|stringformat:"s" %}selected{% endif %}>
+                                {{ year }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium mb-2">
+                            Month
+                        </label>
+
+                        <select name="month"
+                            class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50">
+
+                            <option value="">
+                                All Months
+                            </option>
+
+                            <option value="1" {% if selected_month == "1" %}selected{% endif %}>January</option>
+                            <option value="2" {% if selected_month == "2" %}selected{% endif %}>February</option>
+                            <option value="3" {% if selected_month == "3" %}selected{% endif %}>March</option>
+                            <option value="4" {% if selected_month == "4" %}selected{% endif %}>April</option>
+                            <option value="5" {% if selected_month == "5" %}selected{% endif %}>May</option>
+                            <option value="6" {% if selected_month == "6" %}selected{% endif %}>June</option>
+                            <option value="7" {% if selected_month == "7" %}selected{% endif %}>July</option>
+                            <option value="8" {% if selected_month == "8" %}selected{% endif %}>August</option>
+                            <option value="9" {% if selected_month == "9" %}selected{% endif %}>September</option>
+                            <option value="10" {% if selected_month == "10" %}selected{% endif %}>October</option>
+                            <option value="11" {% if selected_month == "11" %}selected{% endif %}>November</option>
+                            <option value="12" {% if selected_month == "12" %}selected{% endif %}>December</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium mb-2">
+                            Category
+                        </label>
+
+                        <select name="category"
+                            class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50">
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+                            {% for category in categories %}
+
+                            <option value="{{ category.id }}"
+                                {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+
+                                {{ category.category_icon }}
+                                {{ category.category_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium mb-2">
+                            From Date
+                        </label>
+
+                        <input type="date"
+                            name="from_date"
+                            value="{{ selected_from_date }}"
+                            class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50">
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium mb-2">
+                            To Date
+                        </label>
+
+                        <input type="date"
+                            name="to_date"
+                            value="{{ selected_to_date }}"
+                            class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50">
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="block text-sm font-medium mb-2">
+                            Payment Type
+                        </label>
+
+                        <select name="payment_type"
+                            class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50">
+
+                            <option value="">
+                                All Types
+                            </option>
+
+                            <option value="cash"
+                                {% if selected_payment_type == "cash" %}selected{% endif %}>
+                                💵 Cash
+                            </option>
+
+                            <option value="online"
+                                {% if selected_payment_type == "online" %}selected{% endif %}>
+                                💳 Online
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col sm:flex-row gap-3 mt-6">
+
+                    <button type="submit"
+                        class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700">
+
+                        Apply Filter
+
+                    </button>
+
+                    <a href="{% url 'reports' %}"
+                        class="px-6 py-3 text-center border border-gray-200 rounded-lg font-medium hover:bg-gray-50">
+
+                        Reset
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+                <p class="text-sm text-gray-500">
+                    Total Spending
+                </p>
+
+                <p class="text-3xl font-bold text-gray-900 mt-2">
+                    ₹{{ total_amount|floatformat:2 }}
+                </p>
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Based on selected filters
+                </p>
+
+            </div>
+
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+                <p class="text-sm text-gray-500">
+                    Average Expense
+                </p>
+
+                <p class="text-3xl font-bold text-indigo-600 mt-2">
+                    ₹{{ average_amount|floatformat:2 }}
+                </p>
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Per transaction
+                </p>
+
+            </div>
+
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+                <p class="text-sm text-gray-500">
+                    Total Entries
+                </p>
+
+                <p class="text-3xl font-bold text-blue-600 mt-2">
+                    {{ total_entries }}
+                </p>
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Transactions
+                </p>
+
+            </div>
+
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+                <p class="text-sm text-gray-500">
+                    Online Spending
+                </p>
+
+                <p class="text-3xl font-bold text-purple-600 mt-2">
+                    ₹{{ online_amount|floatformat:2 }}
+                </p>
+
+                <p class="text-xs text-gray-400 mt-2">
+                    {{ online_count }} transactions
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+                <p class="text-sm text-gray-500">
+                    Cash Spending
+                </p>
+
+                <p class="text-3xl font-bold text-blue-600 mt-2">
+                    ₹{{ cash_amount|floatformat:2 }}
+                </p>
+
+                <p class="text-sm text-gray-400 mt-2">
+                    {{ cash_count }} transactions
+                </p>
+
+            </div>
+
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+                <p class="text-sm text-gray-500">
+                    Online Spending
+                </p>
+
+                <p class="text-3xl font-bold text-purple-600 mt-2">
+                    ₹{{ online_amount|floatformat:2 }}
+                </p>
+
+                <p class="text-sm text-gray-400 mt-2">
+                    {{ online_count }} transactions
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden mb-8">
+
+            <div class="px-6 py-5 border-b border-gray-100">
+
+                <h2 class="text-lg font-semibold">
+                    Category-wise Spending
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    See where your money is going.
+                </p>
+
+            </div>
+
+
+            {% if category_report %}
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-gray-50">
+
+                        <tr>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Category
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Transactions
+                            </th>
+
+                            <th class="px-6 py-4 text-right text-xs text-gray-500">
+                                Amount
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y divide-gray-100">
+
+                        {% for item in category_report %}
+
+                        <tr class="hover:bg-gray-50">
+
+                            <td class="px-6 py-4">
+
+                                <span class="text-xl">
+                                    {{ item.category__category_icon }}
+                                </span>
+
+                                <span class="font-semibold ml-2">
+                                    {{ item.category__category_name }}
+                                </span>
+
+                            </td>
+
+                            <td class="px-6 py-4 text-gray-600">
+                                {{ item.count }}
+                            </td>
+
+                            <td class="px-6 py-4 text-right font-semibold text-green-600">
+                                ₹{{ item.total|floatformat:2 }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center py-12">
+
+                <div class="text-5xl mb-3">
+                    📊
+                </div>
+
+                <p class="font-semibold">
+                    No category data found
+                </p>
+
+                <p class="text-gray-500 text-sm mt-1">
+                    Try another filter.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <section class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden mb-8">
+
+            <div class="px-6 py-5 border-b border-gray-100">
+
+                <h2 class="text-lg font-semibold">
+                    Monthly Expense Report
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Monthly spending based on selected filters.
+                </p>
+
+            </div>
+
+
+            {% if monthly_report %}
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-gray-50">
+
+                        <tr>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Year
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Month
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Entries
+                            </th>
+
+                            <th class="px-6 py-4 text-right text-xs text-gray-500">
+                                Total
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y divide-gray-100">
+
+                        {% for item in monthly_report %}
+
+                        <tr class="hover:bg-gray-50">
+
+                            <td class="px-6 py-4">
+                                {{ item.date__year }}
+                            </td>
+
+                            <td class="px-6 py-4 font-medium">
+
+                                {% if item.date__month == 1 %}
+                                    January
+                                {% elif item.date__month == 2 %}
+                                    February
+                                {% elif item.date__month == 3 %}
+                                    March
+                                {% elif item.date__month == 4 %}
+                                    April
+                                {% elif item.date__month == 5 %}
+                                    May
+                                {% elif item.date__month == 6 %}
+                                    June
+                                {% elif item.date__month == 7 %}
+                                    July
+                                {% elif item.date__month == 8 %}
+                                    August
+                                {% elif item.date__month == 9 %}
+                                    September
+                                {% elif item.date__month == 10 %}
+                                    October
+                                {% elif item.date__month == 11 %}
+                                    November
+                                {% elif item.date__month == 12 %}
+                                    December
+                                {% endif %}
+
+                            </td>
+
+                            <td class="px-6 py-4 text-gray-600">
+                                {{ item.count }}
+                            </td>
+
+                            <td class="px-6 py-4 text-right font-semibold text-green-600">
+                                ₹{{ item.total|floatformat:2 }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center py-12">
+
+                <div class="text-5xl mb-3">
+                    📅
+                </div>
+
+                <p class="font-semibold">
+                    No monthly data found
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <section class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+
+            <div class="px-6 py-5 border-b border-gray-100">
+
+                <h2 class="text-lg font-semibold">
+                    Expense Details
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    {{ total_entries }} transactions found.
+                </p>
+
+            </div>
+
+
+            {% if expenses %}
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-gray-50">
+
+                        <tr>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Date
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Category
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Amount
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Payment
+                            </th>
+
+                            <th class="px-6 py-4 text-left text-xs text-gray-500">
+                                Description
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y divide-gray-100">
+
+                        {% for expense in expenses %}
+
+                        <tr class="hover:bg-gray-50">
+
+                            <td class="px-6 py-4 text-gray-600">
+                                {{ expense.date|date:"d M Y" }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ expense.category.category_icon }}
+                                {{ expense.category.category_name }}
+                            </td>
+
+                            <td class="px-6 py-4 font-semibold text-green-600">
+                                ₹{{ expense.amount }}
+                            </td>
+
+                            <td class="px-6 py-4">
+
+                                {% if expense.payment_type == "cash" %}
+
+                                <span class="px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
+                                    Cash
+                                </span>
+
+                                {% else %}
+
+                                <span class="px-3 py-1 rounded-full text-xs bg-purple-100 text-purple-700">
+                                    Online
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="px-6 py-4 text-gray-600">
+                                {{ expense.description|default:"-" }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center py-14">
+
+                <div class="text-5xl mb-4">
+                    💰
+                </div>
+
+                <h3 class="text-lg font-semibold">
+                    No expenses found
+                </h3>
+
+                <p class="text-gray-500 mt-2">
+                    Try changing your filters.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

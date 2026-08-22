@@ -1,0 +1,287 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    {% include "header.html" %}
+    <div class="contant flex px-10 py-4 bg-indigo-50 flex-col">
+        <div class="mt-7">
+            <p
+                class="text-indigo-800 text-sm font-bold px-3 py-1 bg-indigo-200 border rounded-full flex items-center gap-2 justify-center w-[300px]">
+                <img src="{% static 'sparkle.png' %}" alt="" class="h-4">
+                Smart way to Manage your Money
+            </p>
+
+            <h1 class="text-7xl flex flex-col w-500 font-medium mt-5 leading-15">Take Control of your Expense with <span
+                    class="text-indigo-700">Expense Manager</span></h1>
+
+            <p class="mt-5 text-xl text-gray-600 w-[510px] py-4 leading-8 font-normal">Expance Manager helps you track
+                your daily expences, Manage budgets, and build better financial habits. simple, fast and secure.</p>
+        </div>
+        <div class="links flex gap-4">
+            <a href="{% url 'login' %}"
+                class="inline-flex items-center bg-indigo-600 gap-2 px-10 py-3 border border-gray-200 text-sm  font-medium rounded-lg text-white hover:bg-indigo-700 transition-all shadow-sm">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                Login to Your Account
+            </a>
+
+            <a href="{% url 'register' %}"
+                class="inline-flex items-center bg-white gap-2 px-10 py-3 border border-gray-200 text-sm  font-medium rounded-lg text-indigo-600 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                Create New Account
+            </a>
+        </div>
+        <div class="ads flex mt-7 gap-4">
+            <p class="border rounded-xl px-4 py-2 bg-gray-50 font-medium flex items-center justify-center gap-2">
+                <img src="{% static 'shield.png' %}" alt="" class="h-4 w-4">
+                100% Secure
+            </p>
+            <p class="border rounded-xl px-4 py-2 bg-gray-50 font-medium flex items-center justify-center gap-2">
+                <img src="{% static 'lightning.png' %}" alt="" class="h-4 w-4">
+                Easy to Use
+            </p>
+
+            <p class="border rounded-xl px-4 py-2 bg-gray-50 font-medium flex items-center justify-center gap-2">
+                <img src="{% static 'market-share.png' %}" alt="" class="h-4 w-4">
+                Track Everything
+            </p>
+        </div>
+    </div>
+    <div class="feature px-4 py-4 flex flex-col items-center justify-center bg-gray-50">
+        <div class="text-center">
+            <p class="font-bold text-indigo-600">FEATURES</p>
+            <h1 class="text-3xl font-medium">Everything You Need to Manage Your Finance</h1>
+            <p class="text-gray-500 font-medium text-l mt-3">Powerful features to help you to track, manage and save
+                more</p>
+        </div>
+
+        <div class="containers mt-10 grid grid-cols-4 gap-10">
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'wallet.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-indigo-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Expense manage
+                    <span class="font-medium text-gray-500 text-sm">Add and manage your daily <br>expences with
+                        category. <br> date and description.</span>
+                </p>
+            </div>
+
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'categories2.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-green-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Category Management
+                    <span class="font-medium text-gray-500 text-sm">Create and manage categories <br>to orgainize your
+                        expences. <br> effectively.</span>
+                </p>
+            </div>
+
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'money-bag.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-orange-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Budget Management
+                    <span class="font-medium text-gray-500 text-sm">Set monthly budget and <br>track your spwnding
+                        againts <br> your budget.</span>
+                </p>
+            </div>
+
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'market-share.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-red-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Monthly Budget
+                    <span class="font-medium text-gray-500 text-sm">Plain your monthly budget <br>and monitor your
+                        monthly <br> financial progress.</span>
+                </p>
+            </div>
+        </div>
+        <div class="containers mt-10 grid grid-cols-4 gap-10">
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'recurring.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-pink-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Recurring Expanceses
+                    <span class="font-medium text-gray-500 text-sm">Add recurring expences and<br>automatically track
+                        them <br> on due dates.</span>
+                </p>
+            </div>
+
+            <div class="flex h-full min-h-[130px] w-full px-3 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'reports.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-yellow-100 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Reports & Analytics
+                    <span class="font-medium text-gray-500 text-sm">Get detailed reports and <br>visual insights of your
+                        spending.</span>
+                </p>
+            </div>
+
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'shield.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-green-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">Secure & Private
+                    <span class="font-medium text-gray-500 text-sm">Your data is 100% secure and<br> private. We value
+                        your<br> security & privacy.</span>
+                </p>
+            </div>
+
+            <div class="flex h-full min-h-[130px] w-full px-5 py-4 border gap-4 shadow-md bg-white rounded-lg">
+                <img src="{% static 'profile.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-indigo-200 rounded-lg">
+                <p class="w-15 flex flex-col font-medium gap-1">profile Management
+                    <span class="font-medium text-gray-500 text-sm">see your profile and <br>personal
+                        information.</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="feature px-4 py-4 flex flex-col items-center justify-center bg-gray-50 mt-10 text-center">
+            <div class="text-center">
+                <p class="font-bold text-indigo-600">HOW IT WORKS</p>
+                <h1 class="text-3xl font-medium">Simple Steps to Get Started</h1>
+            </div>
+
+            <div class="mt-10 grid grid-cols-4 gap-20">
+                <div
+                    class="box w-full min-h-[150px] px-7 py-5 flex flex-col justify-center items-center bg-indigo-100 rounded-lg border shadow-md gap-4">
+                    <img src="{% static 'profile.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-indigo-200 rounded-full">
+                    <div>
+                        <h3 class="font-medium text-xl">Create Account</h3>
+
+                        <p class="font-medium text-gray-500 text-sm">Register and create your <br> account in a few
+                            seconds.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="box w-full min-h-[150px] px-8 py-5 flex flex-col justify-center items-center bg-green-100 rounded-lg border shadow-md gap-4">
+                    <img src="{% static 'wallet.png' %}" alt="" class="w-12 h-12 px-2 py-2 bg-green-200 rounded-full">
+                    <div>
+                        <h3 class="font-medium text-xl">Add Expense</h3>
+
+                        <p class="font-medium text-gray-500 text-sm">Add your daily expences <br> with categories.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="box w-full min-h-[150px] px-8 py-5 flex flex-col justify-center items-center bg-orange-100 rounded-lg border shadow-md gap-4">
+                    <img src="{% static 'money-bag.png' %}" alt=""
+                        class="w-12 h-12 px-2 py-2 bg-orange-200 rounded-full">
+                    <div>
+                        <h3 class="font-medium text-xl">Set Budget</h3>
+
+                        <p class="font-medium text-gray-500 text-sm">Set your monthly budget <br> and track spending</p>
+                    </div>
+                </div>
+
+                <div
+                    class="box w-full min-h-[150px] px-7 py-5 flex flex-col justify-center items-center bg-indigo-100 rounded-lg border shadow-md gap-4">
+                    <img src="{% static 'market-share.png' %}" alt=""
+                        class="w-12 h-12 px-2 py-2 bg-indigo-200 rounded-full">
+                    <div>
+                        <h3 class="font-medium text-xl">Get Insights</h3>
+
+                        <p class="font-medium text-gray-500 text-sm">View reports and manage <br> your finances better.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex bg-indigo-100 px-7 py-4 w-full mt-10 rounded-xl justify-between items-center">
+                <div class="flex flex-col gap-2">
+                    <h1 class="text-2xl font-semibold">Ready to Take Control of Your Expenses?</h1>
+                    <p class="font-medium text-gray-500">Join thousands of users who are managing their finances smarter
+                        every day.</p>
+                </div>
+
+                <div class="login flex gap-4">
+                    <div>
+                        <a href="{% url 'login' %}"
+                            class="inline-flex items-center bg-indigo-600 gap-2 px-7 py-3 border border-gray-200 text-sm  font-medium rounded-lg text-white hover:bg-indigo-700 transition-all shadow-sm">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Login Now
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="{% url 'register' %}"
+                            class="inline-flex items-center bg-white gap-2 px-5 py-3 border border-gray-200 text-sm  font-medium rounded-lg text-indigo-600 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v4h6v-4c0-1.657-1.343-3-3-3zm-4 3a4 4 0 118 0v4H8v-4zm-2 5h12v2H6v-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold">Expense Manager</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-6">
+                        Smart expense tracking for better decisions, stronger habits, and a more confident financial future.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-indigo-300">Company</h4>
+                    <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                        <li><a href="" class="hover:text-white transition">About</a></li>
+                        <li><a href="" class="hover:text-white transition">Features</a></li>
+                        <li><a href="" class="hover:text-white transition">How it works</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-indigo-300">Resources</h4>
+                    <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                        <li><a href="" class="hover:text-white transition">Help Center</a></li>
+                        <li><a href="" class="hover:text-white transition">Budget Tips</a></li>
+                        <li><a href="" class="hover:text-white transition">Security</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-indigo-300">Get Started</h4>
+                    <div class="mt-4 space-y-3">
+                        <a href="{% url 'login' %}" class="inline-flex items-center bg-indigo-600 px-4 py-2 rounded-lg text-sm font-medium text-white hover:bg-indigo-500 transition">
+                            Login
+                        </a>
+                        <a href="{% url 'register' %}" class="inline-flex items-center bg-white text-slate-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 border-t border-slate-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
+                <p>© 2026 Expense Manager. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="" class="hover:text-white transition">Privacy</a>
+                    <a href="" class="hover:text-white transition">Terms</a>
+                    <a href="" class="hover:text-white transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

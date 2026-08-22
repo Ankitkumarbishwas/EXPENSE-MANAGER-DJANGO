@@ -1,0 +1,195 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Expense | Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gray-100 text-gray-800">
+    <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="px-4 px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                    <div class="w-9 h-9 flex items-center justify-center">
+                        <img src="{% static 'wallet.png' %}" alt="" class="h-full w-auto object-contain">
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">
+                        Expense <span class="text-indigo-600">Manager</span>
+                    </span>
+                </a>
+
+                <div class="flex justify-between gap-8">
+                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Dashboard
+                    </a>
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Category
+                    </a>
+                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Expense
+                    </a>
+                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Budget
+                    </a>
+                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Reports
+                    </a>
+                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        About
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    {% if request.user.is_authenticated %}
+
+                    <div
+                        class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-7 py-1.5 shadow-sm">
+                        <div
+                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+                            {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                            {% else %}
+                            {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+
+                        <div class="flex flex-col leading-tight">
+                            <span class="text-sm font-semibold text-gray-800">
+                                {% if request.user.first_name %}
+                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name
+                                }}{% endif %}
+                                {% else %}
+                                {{ request.user.username }}
+                                {% endif %}
+                            </span>
+                            <span class="text-[11px] text-gray-500">{{ request.user.email }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'logout' %}"
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
+                        Logout
+                    </a>
+                    {% else %}
+                    <div class="flex items-center gap-3">
+                        <a href="{% url 'login' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Login
+                        </a>
+
+
+                        <a href="{% url 'register' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            Register
+                        </a>
+                    </div>
+
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <main class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <a href="{% url 'manage_expense' %}"
+                    class="mb-3 inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition hover:text-indigo-700">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to expenses
+                </a>
+                <h1 class="text-3xl font-bold text-gray-900">Edit Expense</h1>
+                <p class="mt-2 text-gray-500">Update the details of this transaction.</p>
+            </div>
+            <div class="rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm text-indigo-700">
+                <span class="font-semibold">Expense record</span>
+                <span class="mt-1 block text-xs text-indigo-500">Make sure your details are accurate.</span>
+            </div>
+        </div>
+
+        <section class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+            <div class="border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-white px-6 py-5 sm:px-8">
+                <h2 class="text-lg font-semibold text-gray-900">Transaction details</h2>
+                <p class="mt-1 text-sm text-gray-500">Change any field below and save your updates.</p>
+            </div>
+
+
+            <form method="POST" class="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 sm:p-8">
+                {% csrf_token %}
+                <div>
+                    <label for="amount" class="mb-2 block text-sm font-medium text-gray-700">Amount</label>
+                    <div class="relative">
+                        <span
+                            class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400">Rs.</span>
+                        <input id="amount" type="number" name="amount" value="{{ expense.amount }}" step="0.01" min="0"
+                            required
+                            class="w-full rounded-lg border border-gray-200 bg-gray-50 py-3 pl-12 pr-4 outline-none transition ">
+                    </div>
+                </div>
+                <div>
+                    <label for="date" class="mb-2 block text-sm font-medium text-gray-700">Date</label>
+                    <input id="date" type="date" name="date" value="{{ expense.date|date:'Y-m-d' }}" required
+                        class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition ">
+                </div>
+                <div>
+                    <label for="category" class="mb-2 block text-sm font-medium text-gray-700">Category</label>
+                    <select id="category" name="category" required
+                        class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition ">
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id == expense.category_id %}selected{% endif %}>
+                            {{ category.category_icon }} {{ category.category_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="payment_type" class="mb-2 block text-sm font-medium text-gray-700">Payment Type</label>
+                    <select id="payment_type" name="payment_type" required
+                        class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition ">
+                        <option value="cash" {% if expense.payment_type == 'cash' %}selected{% endif %}>Cash</option>
+                        <option value="online" {% if expense.payment_type == 'online' %}selected{% endif %}>Online
+                        </option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="description" class="mb-2 block text-sm font-medium text-gray-700">Description <span
+                            class="font-normal text-gray-400">(optional)</span></label>
+                    <textarea id="description" name="description" rows="4"
+                        placeholder="Add any notes about this expense..."
+                        class="w-full resize-y rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 outline-none transition ">{{ expense.description }}</textarea>
+                </div>
+                <div
+                    class="flex flex-col-reverse gap-3 border-t border-gray-100 pt-6 sm:col-span-2 sm:flex-row sm:justify-end">
+                    <a href="{% url 'manage_expense' %}"
+                        class="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-medium text-gray-600 transition hover:bg-gray-100">Cancel</a>
+                    <button type="submit"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

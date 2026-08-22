@@ -1,0 +1,423 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Budgets | Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gray-50 text-gray-800">
+	 <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="px-4 px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                    <div class="w-9 h-9 flex items-center justify-center">
+                        <img src="{% static 'wallet.png' %}" alt="" class="h-full w-auto object-contain">
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">
+                        Expense <span class="text-indigo-600">Manager</span>
+                    </span>
+                </a>
+
+                <div class="flex justify-between gap-8">
+                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Dashboard
+                    </a>
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Category
+                    </a>
+                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Expense
+                    </a>
+                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Budget
+                    </a>
+                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Reports
+                    </a>
+                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        About
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    {% if request.user.is_authenticated %}
+
+                    <div
+                        class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-7 py-1.5 shadow-sm">
+                        <div
+                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+                            {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                            {% else %}
+                            {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+
+                        <div class="flex flex-col leading-tight">
+                            <span class="text-sm font-semibold text-gray-800">
+                                {% if request.user.first_name %}
+                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name
+                                }}{% endif %}
+                                {% else %}
+                                {{ request.user.username }}
+                                {% endif %}
+                            </span>
+                            <span class="text-[11px] text-gray-500">{{ request.user.email }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'logout' %}"
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
+                        Logout
+                    </a>
+                    {% else %}
+                    <div class="flex items-center gap-3">
+                        <a href="{% url 'login' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Login
+                        </a>
+
+
+                        <a href="{% url 'register' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            Register
+                        </a>
+                    </div>
+
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <main class="mx-auto max-w-7xl px-6 py-8 lg:py-10">
+
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+
+            <div>
+                <p class="mb-2 text-sm font-medium text-indigo-600">
+                    Financial Planning
+                </p>
+
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                    Your Budgets
+                </h1>
+
+                <p class="mt-1 text-gray-500">
+                    Track your limits and see where your money is going.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+
+                <a href="{% url 'set_budget' %}"
+                    class="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700">
+
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4v16m8-8H4" />
+                    </svg>
+
+                    Set a Budget
+                </a>
+
+                <a href="{% url 'set_budget' %}"
+                    class="inline-flex items-center justify-center rounded-lg border border-indigo-200 bg-white px-4 py-3 text-sm font-medium text-indigo-600 transition hover:bg-indigo-50">
+                    Add Another Budget
+                </a>
+
+            </div>
+
+        </div>
+
+        <section class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+            <div class="rounded-xl border border-indigo-100 bg-white p-5 shadow-sm">
+
+                <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+                    <span class="text-lg font-bold">₹</span>
+                </div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Total Budget
+                </p>
+
+                <p class="mt-1 text-2xl font-bold text-gray-900">
+                    ₹{{ total_budget|floatformat:2 }}
+                </p>
+
+            </div>
+
+            <div class="rounded-xl border border-rose-100 bg-white p-5 shadow-sm">
+
+                <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 1.12-3 2.5S10.343 13 12 13s3 1.12 3 2.5S13.657 18 12 18m0-10V6m0 12v-2m8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
+                    </svg>
+
+                </div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Total Spend
+                </p>
+
+                <p class="mt-1 text-2xl font-bold text-gray-900">
+                    ₹{{ total_spend|floatformat:2 }}
+                </p>
+
+            </div>
+
+            <div class="rounded-xl border border-emerald-100 bg-white p-5 shadow-sm">
+
+                <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12l4 4L19 6" />
+                    </svg>
+
+                </div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Total Remaining
+                </p>
+
+                <p class="mt-1 text-2xl font-bold {% if total_remaining < 0 %}text-rose-600{% else %}text-gray-900{% endif %}">
+                    ₹{{ total_remaining|floatformat:2 }}
+                </p>
+
+            </div>
+
+            <div class="rounded-xl border border-blue-100 bg-white p-5 shadow-sm">
+
+                <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6" />
+                    </svg>
+
+                </div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Number of Budgets
+                </p>
+
+                <p class="mt-1 text-2xl font-bold text-gray-900">
+                    {{ budget_count }}
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+
+            <div class="flex flex-col gap-4 border-b border-gray-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Budget Overview
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Your category limits and current progress.
+                    </p>
+                </div>
+
+                <form method="GET"
+                    action="{% url 'view_budget' %}"
+                    class="flex flex-wrap items-center gap-2">
+
+                    <label for="month" class="text-sm font-medium text-gray-600">
+                        Filter Month
+                    </label>
+
+                    <input id="month"
+                        name="month"
+                        type="month"
+                        value="{{ selected_month }}"
+                        class="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100">
+
+                    <button type="submit"
+                        class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700">
+                        Apply
+                    </button>
+
+                    {% if selected_month %}
+
+                    <a href="{% url 'view_budget' %}"
+                        class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-50">
+                        Clear
+                    </a>
+
+                    {% endif %}
+
+                </form>
+
+            </div>
+
+            {% if budgets %}
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full min-w-[760px] text-left">
+
+                    <thead class="border-b border-gray-100 bg-gray-50">
+
+                        <tr>
+                            <th class="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500 sm:px-6">
+                                Category
+                            </th>
+
+                            <th class="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Budget Amount
+                            </th>
+
+                            <th class="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Month
+                            </th>
+
+                            <th class="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Spent
+                            </th>
+
+                            <th class="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                Remaining
+                            </th>
+
+                            <th class="px-5 py-4 text-right text-xs font-semibold uppercase tracking-wide text-gray-500 sm:px-6">
+                                Actions
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="divide-y divide-gray-100">
+
+                        {% for budget in budgets %}
+
+                        <tr class="transition hover:bg-gray-50">
+
+                            <td class="px-5 py-5 sm:px-6">
+
+                                <div class="flex items-center gap-3">
+
+                                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-lg">
+                                        {{ budget.category.category_icon }}
+                                    </div>
+
+                                    <span class="font-semibold text-gray-900">
+                                        {{ budget.category.category_name }}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+                            <td class="px-5 py-5 font-medium text-gray-900">
+                                ₹{{ budget.amount|floatformat:2 }}
+                            </td>
+
+                            <td class="px-5 py-5 text-gray-600">
+                                {{ budget.month|date:"F Y" }}
+                            </td>
+
+                            <td class="px-5 py-5 text-gray-600">
+                                ₹{{ budget.spent|floatformat:2 }}
+                            </td>
+
+                            <td class="px-5 py-5 font-semibold {% if budget.remaining < 0 %}text-rose-600{% else %}text-emerald-600{% endif %}">
+                                ₹{{ budget.remaining|floatformat:2 }}
+                            </td>
+
+                            <td class="px-5 py-5 sm:px-6">
+
+                                <div class="flex justify-end gap-2">
+
+                                    <a href="{% url 'edit_budget' budget.id %}"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-indigo-200 px-3 py-2 text-sm font-medium text-indigo-600 transition hover:bg-indigo-50">
+
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+
+                                        Edit
+                                    </a>
+
+                                    <a href="{% url 'delete_budget' budget.id %}"
+                                        onclick="return confirm('Delete this budget?');"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-rose-200 px-3 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
+
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+
+                                        Delete
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="px-6 py-16 text-center">
+
+                <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-2xl">
+                    💰
+                </div>
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    No Budgets Yet
+                </h3>
+
+                <p class="mx-auto mt-2 max-w-sm text-sm text-gray-500">
+                    Set your first category budget to start tracking your monthly spending.
+                </p>
+
+                <a href="{% url 'set_budget' %}"
+                    class="mt-6 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700">
+                    Create Your First Budget
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

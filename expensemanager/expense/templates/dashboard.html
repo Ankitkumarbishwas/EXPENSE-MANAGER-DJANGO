@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    {% load static %}
+
+    <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="px-4 px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                    <div class="w-9 h-9 flex items-center justify-center">
+                        <img src="{% static 'wallet.png' %}" alt="" class="h-full w-auto object-contain">
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">
+                        Expense <span class="text-indigo-600">Manager</span>
+                    </span>
+                </a>
+
+                <div class="flex justify-between gap-8">
+                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Dashboard
+                    </a>
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Category
+                    </a>
+                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Expense
+                    </a>
+                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Budget
+                    </a>
+                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        Reports
+                    </a>
+                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                        About
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    {% if request.user.is_authenticated %}
+
+                    <div
+                        class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-7 py-1.5 shadow-sm">
+                        <div
+                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+                            {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                            {% else %}
+                            {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+
+                        <div class="flex flex-col leading-tight">
+                            <span class="text-sm font-semibold text-gray-800">
+                                {% if request.user.first_name %}
+                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name
+                                }}{% endif %}
+                                {% else %}
+                                {{ request.user.username }}
+                                {% endif %}
+                            </span>
+                            <span class="text-[11px] text-gray-500">{{ request.user.email }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'logout' %}"
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
+                        Logout
+                    </a>
+                    {% else %}
+                    <div class="flex items-center gap-3">
+                        <a href="{% url 'login' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Login
+                        </a>
+
+
+                        <a href="{% url 'register' %}"
+                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            Register
+                        </a>
+                    </div>
+
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <section class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">
+                Welcome back,
+                {{ request.user.first_name|default:request.user.username }} 👋
+            </h1>
+
+            <p class="mt-2 text-gray-500">
+                Here's an overview of your expenses this month.
+            </p>
+        </section>
+
+        <section class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+            <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500">Monthly Budget</p>
+                        <h2 class="mt-2 text-2xl font-bold">
+                            ₹{{ monthly_budget|floatformat:2 }}
+                        </h2>
+                    </div>
+
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-2xl">
+                        💰
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500">Total Expense</p>
+                        <h2 class="mt-2 text-2xl font-bold">
+                            ₹{{ total_expenses|floatformat:2 }}
+                        </h2>
+                    </div>
+
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 text-2xl">
+                        💸
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500">Remaining Budget</p>
+                        <h2 class="mt-2 text-2xl font-bold">
+                            ₹{{ remaining_budget|floatformat:2 }}
+                        </h2>
+                    </div>
+
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-2xl">
+                        📊
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500">Transactions</p>
+                        <h2 class="mt-2 text-2xl font-bold">
+                            {{ total_entries }}
+                        </h2>
+                    </div>
+
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-2xl">
+                        🧾
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+            <div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm lg:col-span-2">
+
+                <div class="flex items-center justify-between border-b border-gray-100 p-6">
+                    <div>
+                        <h3 class="text-lg font-bold">Recent Expenses</h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                            Your latest transactions
+                        </p>
+                    </div>
+
+                    <a href="{% url 'manage_expense' %}"
+                        class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                        View All
+                    </a>
+                </div>
+
+                <div class="divide-y divide-gray-100">
+
+                    {% for expense in recent_expenses %}
+
+                    <div class="flex items-center justify-between gap-4 p-5">
+
+                        <div class="flex min-w-0 items-center gap-4">
+                            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-xl">
+                                {{ expense.category.category_icon }}
+                            </div>
+
+                            <div class="min-w-0">
+                                <h4 class="truncate font-semibold">
+                                    {{ expense.category.category_name }}
+                                </h4>
+
+                                <p class="truncate text-sm text-gray-500">
+                                    {% if expense.description %}
+                                        {{ expense.description }}
+                                    {% else %}
+                                        No description
+                                    {% endif %}
+                                    • {{ expense.date|date:"d M Y" }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="shrink-0 font-semibold text-red-600">
+                            - ₹{{ expense.amount|floatformat:2 }}
+                        </p>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="px-6 py-10 text-center">
+                        <div class="mb-3 text-4xl">🧾</div>
+
+                        <p class="text-gray-500">
+                            No expenses found this month.
+                        </p>
+
+                        <a href="{% url 'add_expense' %}"
+                            class="mt-3 inline-block text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                            Add your first expense →
+                        </a>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+
+                <div class="border-b border-gray-100 p-6">
+                    <h3 class="text-lg font-bold">Categories</h3>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Your spending categories
+                    </p>
+                </div>
+
+                <div class="space-y-5 p-6">
+
+                    {% for category in category_report %}
+
+                    <div>
+                        <div class="mb-2 flex items-center justify-between gap-3">
+
+                            <div class="flex min-w-0 items-center gap-2">
+                                <span>
+                                    {{ category.category__category_icon }}
+                                </span>
+
+                                <span class="truncate text-sm font-medium">
+                                    {{ category.category__category_name }}
+                                </span>
+                            </div>
+
+                            <span class="shrink-0 text-sm font-semibold">
+                                ₹{{ category.total|floatformat:2 }}
+                            </span>
+
+                        </div>
+
+                        <div class="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                            <div class="h-2 rounded-full bg-indigo-600" style="width: 50%;"></div>
+                        </div>
+                    </div>
+
+                    {% empty %}
+
+                    <div class="py-5 text-center">
+                        <div class="mb-2 text-3xl">📂</div>
+
+                        <p class="text-sm text-gray-500">
+                            No category data available.
+                        </p>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="mt-8">
+
+            <h3 class="mb-4 text-lg font-bold">
+                Quick Actions
+            </h3>
+
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+
+                <a href="{% url 'add_expense' %}"
+                    class="rounded-2xl bg-indigo-600 p-5 text-white transition hover:bg-indigo-700">
+
+                    <div class="mb-3 text-3xl">➕</div>
+
+                    <h4 class="text-lg font-semibold">
+                        Add Expense
+                    </h4>
+
+                    <p class="mt-1 text-sm text-indigo-100">
+                        Record a new expense
+                    </p>
+
+                </a>
+
+                <a href="{% url 'set_budget' %}"
+                    class="rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-indigo-400">
+
+                    <div class="mb-3 text-3xl">💰</div>
+
+                    <h4 class="text-lg font-semibold">
+                        Set Budget
+                    </h4>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Manage your monthly budget
+                    </p>
+
+                </a>
+
+                <a href="{% url 'manage_category' %}"
+                    class="rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-indigo-400">
+
+                    <div class="mb-3 text-3xl">🗂️</div>
+
+                    <h4 class="text-lg font-semibold">
+                        Manage Categories
+                    </h4>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Add or manage expense categories
+                    </p>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="mt-12 border-t border-gray-200 bg-white">
+        <div class="mx-auto max-w-7xl px-6 py-6 text-center">
+            <p class="text-sm text-gray-500">
+                © 2026 Expense Manager. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
