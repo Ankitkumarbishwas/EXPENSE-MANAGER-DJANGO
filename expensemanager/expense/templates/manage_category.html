@@ -10,48 +10,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
-     <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div class="px-4 px-8">
-            <div class="flex items-center justify-between h-16">
+<body class="min-h-screen bg-gray-100 text-gray-800">
+    <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="px-4 sm:px-8">
+            <div class="flex flex-wrap items-center justify-between gap-y-3 py-3 md:py-0 md:h-16">
 
-                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3 shrink-0">
                     <div class="w-9 h-9 flex items-center justify-center">
                         <img src="{% static 'wallet.png' %}" alt="" class="h-full w-auto object-contain">
                     </div>
-                    <span class="text-xl font-bold text-gray-900">
+                    <span class="text-lg sm:text-xl font-bold text-gray-900">
                         Expense <span class="text-indigo-600">Manager</span>
                     </span>
                 </a>
 
-                <div class="flex justify-between gap-8">
-                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                <div class="flex items-center gap-4 sm:gap-8 overflow-x-auto max-w-full pb-1 md:pb-0 order-3 md:order-2 w-full md:w-auto">
+                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
                         Dashboard
                     </a>
-                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
                         Category
                     </a>
-                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
                         Expense
                     </a>
-                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
                         Budget
                     </a>
-                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
                         Reports
                     </a>
-                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
                         About
                     </a>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 order-2 md:order-3">
                     {% if request.user.is_authenticated %}
 
-                    <div
-                        class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-7 py-1.5 shadow-sm">
-                        <div
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+                    <div class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-3 sm:px-7 py-1.5 shadow-sm">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white shrink-0">
                             {% if request.user.first_name %}
                             {{ request.user.first_name|first|upper }}
                             {% else %}
@@ -59,7 +57,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="flex flex-col leading-tight">
+                        <div class="hidden sm:flex flex-col leading-tight">
                             <span class="text-sm font-semibold text-gray-800">
                                 {% if request.user.first_name %}
                                 {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name
@@ -73,13 +71,13 @@
                     </div>
 
                     <a href="{% url 'logout' %}"
-                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600 whitespace-nowrap">
                         Logout
                     </a>
                     {% else %}
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 sm:gap-3">
                         <a href="{% url 'login' %}"
-                            class="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -87,9 +85,8 @@
                             Login
                         </a>
 
-
                         <a href="{% url 'register' %}"
-                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+                            class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -97,7 +94,6 @@
                             Register
                         </a>
                     </div>
-
                     {% endif %}
                 </div>
 
@@ -105,20 +101,19 @@
         </div>
     </div>
 
-    <div class="maincontainer max-w-6xl mx-auto px-6 py-10">
+    <div class="maincontainer max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         <div class="container mb-8">
             <div class="flex items-center justify-between mb-6">
                 <div class="head">
-                    <h1 class="text-3xl font-bold text-gray-900">Manage Categories</h1>
-                    <p class="text-gray-500">Create and manage your expense categories</p>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Manage Categories</h1>
+                    <p class="text-sm sm:text-base text-gray-500 mt-0.5">Create and manage your expense categories</p>
                 </div>
             </div>
 
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
                 <a href="{% url 'add_category' %}"
-                    class="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-indigo-700 transition shadow-sm">
+                    class="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-indigo-700 transition shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
@@ -126,7 +121,7 @@
                 </a>
 
                 <a href="{% url 'add_expense' %}"
-                    class="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-green-700 transition shadow-sm">
+                    class="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-green-700 transition shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
@@ -134,7 +129,7 @@
                 </a>
 
                 <a href="{% url 'manage_expense' %}"
-                    class="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition shadow-sm">
+                    class="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-700 transition shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -143,7 +138,7 @@
                 </a>
 
                 <a href="{% url 'dashboard' %}"
-                    class="inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium hover:bg-gray-50 transition">
+                    class="inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-700 px-4 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gray-50 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -152,13 +147,11 @@
                 </a>
             </div>
 
-
-
             <!-- Main Card -->
             <div class="card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="head px-6 py-5 border-b border-gray-100">
-                    <h2 class="text-lg font-semibold text-gray-900">Your Categories</h2>
-                    <p class="text-sm text-gray-500 mt-1">
+                <div class="head px-5 py-4 sm:px-6 sm:py-5 border-b border-gray-100">
+                    <h2 class="text-base sm:text-lg font-semibold text-gray-900">Your Categories</h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1">
                         Categories used to organize your expenses
                     </p>
                 </div>
@@ -167,29 +160,29 @@
                     {% if categories %}
 
                     {% for category in categories %}
-                    <div class="flex items-center justify-between px-6 py-5 hover:bg-gray-50 transition">
-                        <div class="catinfo flex items-center gap-4">
-                            <div class="icon w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-2xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:px-6 sm:py-5 hover:bg-gray-50 transition">
+                        <div class="catinfo flex items-center gap-3 sm:gap-4 min-w-0">
+                            <div class="icon w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-xl sm:text-2xl shrink-0">
                                 {{category.category_icon}}</div>
 
-                            <div class="nameinfo">
-                                <h3 class="font-semibold text-gray-900">{{category.category_name}}</h3>
-                                <p class="text-sm text-gray-500">Expense Category</p>
+                            <div class="nameinfo min-w-0">
+                                <h3 class="font-semibold text-gray-900 text-sm sm:text-base truncate">{{category.category_name}}</h3>
+                                <p class="text-xs sm:text-sm text-gray-500">Expense Category</p>
                             </div>
                         </div>
 
-                        <div class="editdelete flex items-center gap-3">
+                        <div class="editdelete flex items-center gap-2 sm:gap-3 self-end sm:self-auto shrink-0">
                             <a href="{% url 'edit_category' category.id %}"
-                                class="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition">
+                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                                 Edit
                             </a>
 
                             <a href="{% url 'delete_category' category.id %}"
-                                class="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition">
+                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
                                 Delete
@@ -199,15 +192,14 @@
                     {% endfor %}
 
                     {% else %}
-                    <div class="empty text-center py-16 px-6">
-                        <div class="text-6xl mb-4">📂</div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">No Categories Yet</h3>
-                        <p class="text-gray-500 mb-8">Create your first expense category to get started organizing your
-                            expenses.</p>
+                    <div class="empty text-center py-12 sm:py-16 px-4 sm:px-6">
+                        <div class="text-5xl sm:text-6xl mb-4">📂</div>
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">No Categories Yet</h3>
+                        <p class="text-xs sm:text-sm text-gray-500 mb-6 sm:mb-8 max-w-sm mx-auto">Create your first expense category to get started organizing your expenses.</p>
 
-                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
                             <a href="{% url 'add_category' %}"
-                                class="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+                                class="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-indigo-700 transition">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 4v16m8-8H4" />
@@ -216,7 +208,7 @@
                             </a>
 
                             <a href="{% url 'add_expense' %}"
-                                class="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition">
+                                class="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-green-700 transition">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 4v16m8-8H4" />
@@ -225,7 +217,7 @@
                             </a>
 
                             <a href="{% url 'dashboard' %}"
-                                class="inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition">
+                                class="inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-700 px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gray-50 transition">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -241,8 +233,6 @@
         </div>
 
     </div>
-
-
 </body>
 
 </html>
