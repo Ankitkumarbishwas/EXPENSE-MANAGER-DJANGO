@@ -8,26 +8,27 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 antialiased min-h-screen">
     {% load static %}
-     <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div class="px-4 px-8">
+    <header class="header bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
 
-                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
-                    <div class="w-9 h-9 flex items-center justify-center">
-                        <img src="{% static 'wallet.png' %}" alt="" class="h-full w-auto object-contain">
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
+                        <img src="{% static 'wallet.png' %}" alt="Logo" class="h-full w-auto object-contain">
                     </div>
-                    <span class="text-xl font-bold text-gray-900">
+                    <span class="text-lg sm:text-xl font-bold text-gray-900">
                         Expense <span class="text-indigo-600">Manager</span>
                     </span>
                 </a>
 
-                <div class="flex justify-between gap-8">
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-6 lg:gap-8">
                     <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         Dashboard
                     </a>
-                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-indigo-600">
                         Category
                     </a>
                     <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
@@ -42,15 +43,13 @@
                     <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         About
                     </a>
-                </div>
+                </nav>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                     {% if request.user.is_authenticated %}
 
-                    <div
-                        class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-7 py-1.5 shadow-sm">
-                        <div
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
+                    <div class="flex items-center gap-2 sm:gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-2 sm:px-4 py-1 shadow-sm">
+                        <div class="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
                             {% if request.user.first_name %}
                             {{ request.user.first_name|first|upper }}
                             {% else %}
@@ -58,112 +57,114 @@
                             {% endif %}
                         </div>
 
-                        <div class="flex flex-col leading-tight">
-                            <span class="text-sm font-semibold text-gray-800">
+                        <div class="hidden sm:flex flex-col leading-tight max-w-[130px] lg:max-w-[200px]">
+                            <span class="text-xs sm:text-sm font-semibold text-gray-800 truncate">
                                 {% if request.user.first_name %}
-                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name
-                                }}{% endif %}
+                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name }}{% endif %}
                                 {% else %}
                                 {{ request.user.username }}
                                 {% endif %}
                             </span>
-                            <span class="text-[11px] text-gray-500">{{ request.user.email }}</span>
+                            <span class="text-[10px] sm:text-[11px] text-gray-500 truncate">{{ request.user.email }}</span>
                         </div>
                     </div>
 
                     <a href="{% url 'logout' %}"
-                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
                         Logout
                     </a>
                     {% else %}
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 sm:gap-3">
                         <a href="{% url 'login' %}"
-                            class="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
-                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-200 text-xs sm:text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
                             Login
                         </a>
 
-
                         <a href="{% url 'register' %}"
-                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                             </svg>
                             Register
                         </a>
                     </div>
-
                     {% endif %}
                 </div>
 
             </div>
+
+            <!-- Mobile Scrollable Navigation -->
+            <div class="flex md:hidden items-center gap-4 py-2 border-t border-gray-100 overflow-x-auto no-scrollbar text-xs font-medium text-gray-600">
+                <a href="{% url 'dashboard' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Dashboard</a>
+                <a href="{% url 'add_category' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md bg-indigo-50 text-indigo-600 font-semibold">Category</a>
+                <a href="{% url 'add_expense' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Expense</a>
+                <a href="{% url 'set_budget' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Budget</a>
+                <a href="{% url 'reports' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Reports</a>
+                <a href="" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">About</a>
+            </div>
         </div>
-    </div>
-    <div class="max-w-lg mx-auto mt-10 bg-white p-8 rounded-xl shadow">
+    </header>
 
-        <h1 class="text-2xl font-bold mb-6">
-            Add Expense Category
-        </h1>
+    <main class="px-4 py-6 sm:py-10">
+        <div class="max-w-lg mx-auto bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
 
-        <form action="" method="POST">
+            <h1 class="text-xl sm:text-2xl font-bold mb-6 text-gray-900">
+                Add Expense Category
+            </h1>
 
-            {% csrf_token %}
-            <div class="mb-5">
+            <form action="" method="POST">
+                {% csrf_token %}
 
-                <label class="block font-medium mb-2">
-                    Category Name
-                </label>
+                <div class="mb-4 sm:mb-5">
+                    <label class="block text-sm font-medium mb-1.5 sm:mb-2 text-gray-700">
+                        Category Name
+                    </label>
+                    <input type="text" name="category_name" placeholder="Enter category name" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" required>
+                </div>
 
-                <input type="text" name="category_name" placeholder="Enter category name"class="w-full border border-gray-300 rounded-lg px-4 py-3" required>
+                <div class="mb-5 sm:mb-6">
+                    <label class="block text-sm font-medium mb-1.5 sm:mb-2 text-gray-700">
+                        Category Icon
+                    </label>
+                    <input type="text" name="category_icon" placeholder="e.g. 🍔, 🚗, 💡" maxlength="10" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                </div>
 
-            </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-xl hover:bg-indigo-700 font-medium text-sm sm:text-base transition mb-4 active:scale-[0.99] shadow-sm">
+                    Add Category
+                </button>
 
-            <div class="mb-5">
+                <div class="flex flex-col gap-2.5 sm:gap-3">
+                    <a href="{% url 'add_expense' %}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 font-medium text-sm sm:text-base transition active:scale-[0.99] shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Expense
+                    </a>
 
-                <label class="block font-medium mb-2">
-                    Category Icon
-                </label>
+                    <a href="{% url 'manage_category' %}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 bg-yellow-600 text-white rounded-xl hover:bg-yellow-700 font-medium text-sm sm:text-base transition active:scale-[0.99] shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Manage category
+                    </a>
 
-                <input type="text" name="category_icon" placeholder="" maxlength="10"class="w-full border border-gray-300 rounded-lg px-4 py-3">
+                    <a href="{% url 'dashboard' %}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 font-medium text-sm sm:text-base transition active:scale-[0.99]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Dashboard
+                    </a>
+                </div>
 
-            </div>
+            </form>
 
-            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 font-medium transition mb-4">
-                Add Category
-            </button>
-
-            <div class="flex flex-col gap-3">
-                <a href="{% url 'add_expense' %}" class="inline-flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Add Expense
-                </a>
-
-                <a href="{% url 'manage_category' %}" class="inline-flex items-center justify-center gap-2 px-4 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-medium transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Manage category
-                </a>
-
-                
-
-                <a href="{% url 'dashboard' %}" class="inline-flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Back to Dashboard
-                </a>
-            </div>
-
-        </form>
-
-    </div>
+        </div>
+    </main>
 </body>
 
 </html>
