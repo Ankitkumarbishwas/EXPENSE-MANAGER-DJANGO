@@ -10,7 +10,7 @@
 
 <body class="bg-gray-100 text-gray-800 antialiased min-h-screen">
     {% load static %}
-    <header class="header bg-white border-b border-gray-100 sticky top-0 z-50">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
 
@@ -23,12 +23,12 @@
                     </span>
                 </a>
 
-                <!-- Desktop Navigation -->
+                <!-- Desktop Navigation Links -->
                 <nav class="hidden md:flex items-center gap-6 lg:gap-8">
-                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
+                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-indigo-600">
                         Dashboard
                     </a>
-                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-indigo-600">
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         Category
                     </a>
                     <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
@@ -98,10 +98,10 @@
 
             </div>
 
-            <!-- Mobile Scrollable Navigation -->
+            <!-- Mobile Navigation Bar (Horizontal Scrollable) -->
             <div class="flex md:hidden items-center gap-4 py-2 border-t border-gray-100 overflow-x-auto no-scrollbar text-xs font-medium text-gray-600">
-                <a href="{% url 'dashboard' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Dashboard</a>
-                <a href="{% url 'add_category' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md bg-indigo-50 text-indigo-600 font-semibold">Category</a>
+                <a href="{% url 'dashboard' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md bg-indigo-50 text-indigo-600 font-semibold">Dashboard</a>
+                <a href="{% url 'add_category' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Category</a>
                 <a href="{% url 'add_expense' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Expense</a>
                 <a href="{% url 'set_budget' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Budget</a>
                 <a href="{% url 'reports' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Reports</a>

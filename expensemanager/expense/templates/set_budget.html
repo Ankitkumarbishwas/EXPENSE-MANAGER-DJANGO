@@ -9,45 +9,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gray-100 text-gray-800">
-    <div class="header bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div class="px-4 sm:px-8">
-            <div class="flex flex-wrap items-center justify-between gap-y-3 py-3 md:py-0 md:h-16">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
 
-                <a href="{% url 'dashboard' %}" class="flex items-center gap-3 shrink-0">
-                    <div class="w-9 h-9 flex items-center justify-center">
-                        <img src="{% static 'wallet.png' %}" alt="" class="h-full w-auto object-contain">
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
+                        <img src="{% static 'wallet.png' %}" alt="Logo" class="h-full w-auto object-contain">
                     </div>
                     <span class="text-lg sm:text-xl font-bold text-gray-900">
                         Expense <span class="text-indigo-600">Manager</span>
                     </span>
                 </a>
 
-                <div class="flex items-center gap-4 sm:gap-8 overflow-x-auto max-w-full pb-1 md:pb-0 order-3 md:order-2 w-full md:w-auto">
-                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+                    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-indigo-600">
                         Dashboard
                     </a>
-                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
+                    <a href="{% url 'add_category' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         Category
                     </a>
-                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
+                    <a href="{% url 'add_expense' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         Expense
                     </a>
-                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
+                    <a href="{% url 'set_budget' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         Budget
                     </a>
-                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
+                    <a href="{% url 'reports' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         Reports
                     </a>
-                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors whitespace-nowrap">
+                    <a href="" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
                         About
                     </a>
-                </div>
+                </nav>
 
-                <div class="flex items-center gap-3 order-2 md:order-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                     {% if request.user.is_authenticated %}
 
-                    <div class="flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-3 sm:px-7 py-1.5 shadow-sm">
-                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white shrink-0">
+                    <div class="flex items-center gap-2 sm:gap-3 rounded-full border border-indigo-100 bg-indigo-50 px-2 sm:px-4 py-1 shadow-sm">
+                        <div class="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
                             {% if request.user.first_name %}
                             {{ request.user.first_name|first|upper }}
                             {% else %}
@@ -55,28 +56,27 @@
                             {% endif %}
                         </div>
 
-                        <div class="hidden sm:flex flex-col leading-tight">
-                            <span class="text-sm font-semibold text-gray-800">
+                        <div class="hidden sm:flex flex-col leading-tight max-w-[130px] lg:max-w-[200px]">
+                            <span class="text-xs sm:text-sm font-semibold text-gray-800 truncate">
                                 {% if request.user.first_name %}
-                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name
-                                }}{% endif %}
+                                {{ request.user.first_name }} {% if request.user.last_name %}{{ request.user.last_name }}{% endif %}
                                 {% else %}
                                 {{ request.user.username }}
                                 {% endif %}
                             </span>
-                            <span class="text-[11px] text-gray-500">{{ request.user.email }}</span>
+                            <span class="text-[10px] sm:text-[11px] text-gray-500 truncate">{{ request.user.email }}</span>
                         </div>
                     </div>
 
                     <a href="{% url 'logout' %}"
-                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600 whitespace-nowrap">
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-gray-700 transition hover:border-red-200 hover:text-red-600">
                         Logout
                     </a>
                     {% else %}
                     <div class="flex items-center gap-2 sm:gap-3">
                         <a href="{% url 'login' %}"
-                            class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
-                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-200 text-xs sm:text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
@@ -84,8 +84,8 @@
                         </a>
 
                         <a href="{% url 'register' %}"
-                            class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-sm">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                             </svg>
@@ -96,8 +96,18 @@
                 </div>
 
             </div>
+
+            <!-- Mobile Navigation Bar (Horizontal Scrollable) -->
+            <div class="flex md:hidden items-center gap-4 py-2 border-t border-gray-100 overflow-x-auto no-scrollbar text-xs font-medium text-gray-600">
+                <a href="{% url 'dashboard' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md bg-indigo-50 text-indigo-600 font-semibold">Dashboard</a>
+                <a href="{% url 'add_category' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Category</a>
+                <a href="{% url 'add_expense' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Expense</a>
+                <a href="{% url 'set_budget' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Budget</a>
+                <a href="{% url 'reports' %}" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">Reports</a>
+                <a href="" class="whitespace-nowrap py-1 px-2.5 rounded-md hover:bg-gray-50">About</a>
+            </div>
         </div>
-    </div>
+    </header>
 
     <main class="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:py-12">
         <div class="mb-4 sm:mb-6 flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-500">
