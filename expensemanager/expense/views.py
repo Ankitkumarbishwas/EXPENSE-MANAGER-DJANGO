@@ -32,16 +32,17 @@ def register(req):
     form = UserCreationForm(req.POST or None)
     if req.method == "POST":
         if form.is_valid():
+            print("FORM VALID")
             data = form.save(commit=False)
-            data.first_name = req.POST.get("firstName")
-            data.last_name = req.POST.get("lastName")
-            data.email = req.POST.get("email")
+            data.first_name = req.POST.get("first_name", "")
+            data.last_name = req.POST.get("last_name", "")
+            data.email = req.POST.get("email", "")
             data.save()
-            return redirect('login')
-    data ={
-        "registerForm" :form
-    }    
-    return render(req,"register.html",data)
+            return redirect("login")
+    data = {
+        "registerForm": form
+    }
+    return render(req, "register.html", data)
 
 def logout(req):
     auth_logout(req)
