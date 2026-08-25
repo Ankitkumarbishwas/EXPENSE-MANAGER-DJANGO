@@ -33,8 +33,8 @@ def register(req):
     if req.method == "POST":
         if form.is_valid():
             data = form.save(commit=False)
-            data.first_name = req.POST.get("firstName")
-            data.last_name = req.POST.get("lastName")
+            data.firstName = req.POST.get("firstName")
+            data.lastName = req.POST.get("lastName")
             data.email = req.POST.get("email")
             data.save()
             return redirect('login')
