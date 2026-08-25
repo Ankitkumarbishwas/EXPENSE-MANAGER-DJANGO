@@ -49,38 +49,55 @@ def logout(req):
     return redirect('home')
 
 
+
 @login_required
 def dashboard(req):
 
     today = timezone.now().date()
 
-    # Current logged-in user's expenses
-    expenses = Expense.objects.filter(user=req.user)
-
-    monthly_expenses = expenses.filter(
+    # Current user's current month expenses
+    monthly_expenses = Expense.objects.filter(
+        user=req.user,
         date__year=today.year,
         date__month=today.month
     )
-    # Total expense of current month
-    total_expenses = monthly_expenses.aggregate(total=Sum("amount"))["total"] or 0
+
+    # Total, Average and Entries in one query
+    stats = monthly_expenses.aggregate(
+        total=Sum("amount"),
+        average=Avg("amount"),
+        entries=Count("id")
+    )
+
+    total_expenses = stats["total"] or 0
+    average_expense = stats["average"] or 0
+    total_entries = stats["entries"]
+
+    # Current month's budget
     monthly_budget = Budget.objects.filter(
         user=req.user,
         month__year=today.year,
         month__month=today.month
-    ).aggregate(total=Sum("amount") )["total"] or 0
-    remaining_budget = monthly_budget - total_expenses
-    # Don't show negative remaining budget
-    if remaining_budget < 0:
-        remaining_budget = 0
-    total_entries = monthly_expenses.count()
-    average_expense = monthly_expenses.aggregate(avg=Avg("amount"))["avg"] or 0
-    recent_expenses = monthly_expenses.order_by("-date")[:5]
-    category_report = monthly_expenses.values(
-        "category__category_name",
-        "category__category_icon"
-    ).annotate(
+    ).aggregate(
         total=Sum("amount")
-    ).order_by("-total")
+    )["total"] or 0
+
+    # Remaining budget
+    remaining_budget = max(monthly_budget - total_expenses,0)
+
+    # Latest 5 expenses
+    recent_expenses = (monthly_expenses.select_related("category").order_by("-date")[:5])
+
+    # Category-wise report
+    category_report = (monthly_expenses.values(
+            "category__category_name",
+            "category__category_icon"
+        )
+        .annotate(
+            total=Sum("amount")
+        )
+        .order_by("-total")
+    )
 
     data = {
         "monthly_budget": monthly_budget,
@@ -92,7 +109,7 @@ def dashboard(req):
         "category_report": category_report,
     }
 
-    return render(req,"dashboard.html",data)
+    return render(req, "dashboard.html", data)
 
 @login_required
 def add_category(req):
