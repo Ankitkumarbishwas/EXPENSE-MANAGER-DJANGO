@@ -52,7 +52,10 @@ urlpatterns = [
     path("delete_budget/<int:id>/", views.delete_budget, name="delete_budget"),
 
     #Reports
-    path("reports/",views.reports,name="reports")
+    path("reports/",views.reports,name="reports"),
+
+    #Excel downloard reports
+    path("downloard-reports-excel/",views.download_reports_excel, name="download_reports_excel")
 ]
 
 # append array for using images

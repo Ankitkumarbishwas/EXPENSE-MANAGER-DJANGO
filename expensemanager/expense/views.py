@@ -6,6 +6,10 @@ from django.db.models import Sum,Avg,Count
 from django.utils import timezone
 from datetime import datetime
 
+#package to downloard for excel report
+from openpyxl import Workbook
+from django.http import HttpResponse
+
 from expense.models import ExpenseCategory,Expense,Budget
 
 # Create your views here.
@@ -450,3 +454,99 @@ def reports(request):
     }
 
     return render(request,"reports.html",data)
+
+@login_required
+def download_reports_excel(request):
+
+    # Current user's expenses
+    expenses = Expense.objects.filter(
+        user=request.user
+    ).select_related("category")
+
+    # Filters
+    year = request.GET.get("year")
+    month = request.GET.get("month")
+    category = request.GET.get("category")
+    payment_type = request.GET.get("payment_type")
+    from_date = request.GET.get("from_date")
+    to_date = request.GET.get("to_date")
+
+    if year:
+        expenses = expenses.filter(date__year=year)
+
+    if month:
+        expenses = expenses.filter(date__month=month)
+
+    if category:
+        expenses = expenses.filter(category_id=category)
+
+    if payment_type:
+        expenses = expenses.filter(payment_type=payment_type)
+
+    if from_date:
+        expenses = expenses.filter(date__gte=from_date)
+
+    if to_date:
+        expenses = expenses.filter(date__lte=to_date)
+
+    # Create Excel workbook
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.title = "Expenses"
+
+    # Header
+    worksheet.append([
+        "Date",
+        "Category",
+        "Amount",
+        "Description",
+        "Payment Type"
+    ])
+
+    # Add expense data
+    for expense in expenses:
+        worksheet.append([
+            expense.date,
+            expense.category.category_name,
+            expense.amount,
+            expense.description,
+            expense.payment_type
+        ])
+
+    # Total Amount
+    total_amount = expenses.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
+
+    # Add Total row
+    worksheet.append([
+        "",
+        "TOTAL",
+        total_amount,
+        "",
+        ""
+    ])
+
+    # Date format
+    for cell in worksheet["A"][1:]:
+        cell.number_format = "DD-MM-YYYY"
+
+    # Column widths
+    worksheet.column_dimensions["A"].width = 15
+    worksheet.column_dimensions["B"].width = 20
+    worksheet.column_dimensions["C"].width = 15
+    worksheet.column_dimensions["D"].width = 30
+    worksheet.column_dimensions["E"].width = 15
+
+    # Download Excel
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    response["Content-Disposition"] = (
+        'attachment; filename="expense_report.xlsx"'
+    )
+
+    workbook.save(response)
+
+    return response
