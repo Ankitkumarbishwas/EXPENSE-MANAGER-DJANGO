@@ -1,0 +1,345 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+{% include "header.html" %}
+
+<!-- Hero -->
+<section class="bg-indigo-50 px-4 sm:px-6 md:px-10 py-12 md:py-20">
+
+    <div class="max-w-4xl mx-auto text-center">
+
+        <p class="text-indigo-800 text-xs sm:text-sm font-bold px-4 py-2 bg-indigo-200 rounded-full inline-flex items-center gap-2">
+            <img src="{% static 'sparkle.png' %}" class="w-4 h-4" alt="">
+            CONTACT US
+        </p>
+
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-medium mt-5 leading-tight">
+            We'd Love to
+            <span class="text-indigo-700">Hear From You</span>
+        </h1>
+
+        <p class="mt-5 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-7">
+            Have a question, suggestion or need help? Send us a message
+            and we'll be happy to hear from you.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section class="px-4 sm:px-6 md:px-10 py-12 md:py-16 bg-gray-50">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+
+        <!-- Contact Information -->
+        <div>
+
+            <p class="font-bold text-indigo-600 text-sm">
+                GET IN TOUCH
+            </p>
+
+            <h2 class="text-2xl sm:text-3xl font-medium mt-2">
+                How Can We Help?
+            </h2>
+
+            <p class="text-gray-500 text-sm sm:text-base mt-4 leading-7">
+                Whether you have a question about the application,
+                features or something else, feel free to contact us.
+            </p>
+
+
+            <div class="space-y-4 mt-8">
+
+                <div class="bg-white border rounded-xl p-5 shadow-sm flex gap-4">
+                    <div class="w-11 h-11 shrink-0 bg-indigo-200 rounded-lg flex items-center justify-center">
+                        <span class="text-xl">✉️</span>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold">
+                            Email
+                        </h3>
+
+                        <p class="text-gray-500 text-sm mt-1">
+                            support@expensemanager.com
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="bg-white border rounded-xl p-5 shadow-sm flex gap-4">
+                    <div class="w-11 h-11 shrink-0 bg-green-200 rounded-lg flex items-center justify-center">
+                        <span class="text-xl">💬</span>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold">
+                            Support
+                        </h3>
+
+                        <p class="text-gray-500 text-sm mt-1">
+                            We're here to help you with your questions.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="bg-white border rounded-xl p-5 shadow-sm flex gap-4">
+                    <div class="w-11 h-11 shrink-0 bg-orange-200 rounded-lg flex items-center justify-center">
+                        <span class="text-xl">⚡</span>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold">
+                            Quick Response
+                        </h3>
+
+                        <p class="text-gray-500 text-sm mt-1">
+                            We aim to respond to your queries as quickly as possible.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Contact Form -->
+        <div class="bg-white border rounded-xl shadow-md p-5 sm:p-7 md:p-8">
+
+            <h2 class="text-xl sm:text-2xl font-semibold">
+                Send Us a Message
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-2">
+                Fill out the form below and we'll get back to you.
+            </p>
+
+
+            <form method="POST" class="mt-6 space-y-5">
+
+                {% csrf_token %}
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Your Name
+                    </label>
+
+                    <input type="text"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg
+                        outline-none focus:ring-2 focus:ring-indigo-500
+                        focus:border-indigo-500 text-sm">
+                </div>
+
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg
+                        outline-none focus:ring-2 focus:ring-indigo-500
+                        focus:border-indigo-500 text-sm">
+                </div>
+
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Subject
+                    </label>
+
+                    <input type="text"
+                        name="subject"
+                        placeholder="What is this about?"
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg
+                        outline-none focus:ring-2 focus:ring-indigo-500
+                        focus:border-indigo-500 text-sm">
+                </div>
+
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Message
+                    </label>
+
+                    <textarea
+                        name="message"
+                        rows="5"
+                        placeholder="Write your message..."
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg
+                        outline-none focus:ring-2 focus:ring-indigo-500
+                        focus:border-indigo-500 text-sm resize-none"></textarea>
+                </div>
+
+
+                <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-3 rounded-lg
+                    text-sm font-medium hover:bg-indigo-700 transition
+                    shadow-sm">
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FAQ -->
+<section class="px-4 sm:px-6 md:px-10 py-12 md:py-16 bg-white">
+
+    <div class="max-w-4xl mx-auto">
+
+        <div class="text-center">
+            <p class="font-bold text-indigo-600 text-sm">
+                FAQ
+            </p>
+
+            <h2 class="text-2xl sm:text-3xl font-medium mt-1">
+                Frequently Asked Questions
+            </h2>
+        </div>
+
+
+        <div class="mt-8 space-y-4">
+
+            <div class="border rounded-xl p-5 bg-gray-50">
+                <h3 class="font-semibold">
+                    What is Expense Manager?
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-2 leading-6">
+                    Expense Manager is a web application that helps you
+                    track expenses, manage budgets and understand spending.
+                </p>
+            </div>
+
+
+            <div class="border rounded-xl p-5 bg-gray-50">
+                <h3 class="font-semibold">
+                    Can I manage my monthly budget?
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-2 leading-6">
+                    Yes. You can create monthly budgets and compare your
+                    spending against your planned budget.
+                </p>
+            </div>
+
+
+            <div class="border rounded-xl p-5 bg-gray-50">
+                <h3 class="font-semibold">
+                    Can I organize expenses by category?
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-2 leading-6">
+                    Yes. You can create and manage categories to organize
+                    your expenses effectively.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+            <div>
+                <h3 class="text-lg font-semibold">
+                    Expense Manager
+                </h3>
+
+                <p class="text-sm text-slate-300 mt-3 leading-6">
+                    Smart expense tracking for better decisions,
+                    stronger habits and a more confident financial future.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-indigo-300 uppercase">
+                    Company
+                </h4>
+
+                <div class="mt-4 space-y-3 text-sm text-slate-300">
+                    <a href="#" class="block hover:text-white">About</a>
+                    <a href="#" class="block hover:text-white">Features</a>
+                    <a href="#" class="block hover:text-white">How It Works</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-indigo-300 uppercase">
+                    Resources
+                </h4>
+
+                <div class="mt-4 space-y-3 text-sm text-slate-300">
+                    <a href="#" class="block hover:text-white">Help Center</a>
+                    <a href="#" class="block hover:text-white">Budget Tips</a>
+                    <a href="#" class="block hover:text-white">Security</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-indigo-300 uppercase">
+                    Get Started
+                </h4>
+
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <a href="{% url 'login' %}"
+                        class="bg-indigo-600 px-4 py-2 rounded-lg text-sm hover:bg-indigo-500">
+                        Login
+                    </a>
+
+                    <a href="{% url 'register' %}"
+                        class="bg-white text-slate-900 px-4 py-2 rounded-lg text-sm hover:bg-slate-100">
+                        Register
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-t border-slate-700 mt-8 pt-5 text-center text-sm text-slate-400">
+            © 2026 Expense Manager. All rights reserved.
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

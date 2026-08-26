@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum,Avg,Count
 from django.utils import timezone
 from datetime import datetime
+from django.contrib import messages
 
 #package to downloard for excel report
 from openpyxl import Workbook
@@ -15,6 +16,33 @@ from expense.models import ExpenseCategory,Expense,Budget
 # Create your views here.
 def homepage(req):
     return render(req,"home.html")
+
+def features(req):
+    return render(req,"features.html")
+
+def howitswork(req):
+    return render(req,"howitswork.html")
+
+def about(req):
+    return render(req,"about.html")
+
+def contact(req):
+    if req.method == "POST":
+        name = req.POST.get("name")
+        email = req.POST.get("email")
+        subject = req.POST.get("subject")
+        message = req.POST.get("message")
+
+        # Abhi yahan message ko process/save kar sakte ho
+        print("Name:", name)
+        print("Email:", email)
+        print("Subject:", subject)
+        print("Message:", message)
+
+        messages.success( req,"Your message has been sent successfully!")
+
+        return redirect("contact")
+    return render(req,"contact.html")
 
 def login(req):
     form = AuthenticationForm(req.POST or None)

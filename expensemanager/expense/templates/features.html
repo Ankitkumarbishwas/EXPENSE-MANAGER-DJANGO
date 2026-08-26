@@ -1,0 +1,601 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features | Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    {% include "header.html" %}
+
+    <!-- ================= HERO ================= -->
+    <section class="bg-indigo-50 px-4 sm:px-6 md:px-10 py-12 md:py-20">
+
+        <div class="max-w-7xl mx-auto text-center">
+
+            <p
+                class="text-indigo-800 text-xs sm:text-sm font-bold px-3 py-1 bg-indigo-200 border rounded-full inline-flex items-center gap-2">
+                <img src="{% static 'sparkle.png' %}" class="h-4" alt="">
+                POWERFUL FEATURES
+            </p>
+
+            <h1
+                class="text-3xl sm:text-5xl md:text-6xl font-medium mt-5 leading-tight max-w-4xl mx-auto">
+                Everything You Need to
+                <span class="text-indigo-700">
+                    Manage Your Money
+                </span>
+            </h1>
+
+            <p
+                class="mt-5 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-7">
+                Expense Manager gives you simple and powerful tools to
+                track expenses, manage budgets and understand your
+                financial habits.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FEATURES ================= -->
+    <section class="px-4 sm:px-6 md:px-10 py-12 md:py-16 bg-gray-50">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="text-center mb-10 md:mb-14">
+
+                <p class="font-bold text-indigo-600 text-sm">
+                    WHAT YOU CAN DO
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-medium mt-2">
+                    Smart Tools for Better Financial Management
+                </h2>
+
+                <p class="text-gray-500 mt-3 max-w-2xl mx-auto">
+                    Everything is designed to make expense tracking
+                    simple, organized and easy to understand.
+                </p>
+
+            </div>
+
+
+            <!-- Feature Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+
+
+                <!-- Expense Management -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'wallet.png' %}"
+                        class="w-14 h-14 p-3 bg-indigo-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Expense Management
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Add and manage your daily expenses with amount,
+                        category, date, description and payment type.
+                    </p>
+
+                </div>
+
+
+                <!-- Category Management -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'categories2.png' %}"
+                        class="w-14 h-14 p-3 bg-green-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Category Management
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Create your own categories and organize your
+                        expenses according to your needs.
+                    </p>
+
+                </div>
+
+
+                <!-- Budget Management -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'money-bag.png' %}"
+                        class="w-14 h-14 p-3 bg-orange-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Budget Management
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Set budgets and monitor your spending so you
+                        can stay within your financial limits.
+                    </p>
+
+                </div>
+
+
+                <!-- Monthly Budget -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'market-share.png' %}"
+                        class="w-14 h-14 p-3 bg-red-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Monthly Budget
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Plan your monthly finances and see how much
+                        you have spent and how much is remaining.
+                    </p>
+
+                </div>
+
+
+                <!-- Recurring Expenses -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'recurring.png' %}"
+                        class="w-14 h-14 p-3 bg-pink-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Recurring Expenses
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Manage regular expenses such as subscriptions,
+                        rent and other repeated payments.
+                    </p>
+
+                </div>
+
+
+                <!-- Reports -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'reports.png' %}"
+                        class="w-14 h-14 p-3 bg-yellow-100 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Reports & Analytics
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Analyze your spending by date, month, year
+                        and category to understand your financial habits.
+                    </p>
+
+                </div>
+
+
+                <!-- Security -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'shield.png' %}"
+                        class="w-14 h-14 p-3 bg-green-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Secure & Private
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Your financial information stays connected to
+                        your account and is kept private.
+                    </p>
+
+                </div>
+
+
+                <!-- Profile -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'profile.png' %}"
+                        class="w-14 h-14 p-3 bg-indigo-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Profile Management
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Manage your personal profile information
+                        from one convenient place.
+                    </p>
+
+                </div>
+
+
+                <!-- Payment Tracking -->
+                <div
+                    class="bg-white border rounded-xl p-6 shadow-md hover:shadow-lg transition">
+
+                    <img src="{% static 'wallet.png' %}"
+                        class="w-14 h-14 p-3 bg-blue-200 rounded-xl"
+                        alt="">
+
+                    <h3 class="text-xl font-semibold mt-5">
+                        Payment Tracking
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-6 mt-2">
+                        Keep track of whether an expense was paid
+                        using cash or online payment.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= WHY EXPENSE MANAGER ================= -->
+    <section class="bg-white px-4 sm:px-6 md:px-10 py-12 md:py-16">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+                <!-- Left -->
+                <div>
+
+                    <p class="font-bold text-indigo-600 text-sm">
+                        WHY EXPENSE MANAGER?
+                    </p>
+
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-medium mt-2">
+                        Make Your Financial Life Simple
+                    </h2>
+
+                    <p class="text-gray-500 mt-4 leading-7">
+                        Managing money does not have to be complicated.
+                        Expense Manager brings your expenses, categories,
+                        budgets and financial insights together in one place.
+                    </p>
+
+                    <div class="mt-6 space-y-4">
+
+                        <div class="flex gap-3">
+                            <div
+                                class="w-8 h-8 shrink-0 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold">
+                                ✓
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold">
+                                    Simple to Use
+                                </h3>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Add and manage your expenses without
+                                    complicated steps.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="flex gap-3">
+                            <div
+                                class="w-8 h-8 shrink-0 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold">
+                                ✓
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold">
+                                    Organized
+                                </h3>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Keep your expenses organized using
+                                    categories and budgets.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="flex gap-3">
+                            <div
+                                class="w-8 h-8 shrink-0 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold">
+                                ✓
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold">
+                                    Better Insights
+                                </h3>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Understand where your money is going
+                                    and make better financial decisions.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Right -->
+                <div class="bg-indigo-50 rounded-2xl border p-6 sm:p-8">
+
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <div class="bg-white rounded-xl border shadow-sm p-5">
+                            <p class="text-sm text-gray-500">
+                                Track
+                            </p>
+
+                            <h3 class="text-xl font-semibold text-indigo-700 mt-1">
+                                Expenses
+                            </h3>
+                        </div>
+
+
+                        <div class="bg-white rounded-xl border shadow-sm p-5">
+                            <p class="text-sm text-gray-500">
+                                Manage
+                            </p>
+
+                            <h3 class="text-xl font-semibold text-indigo-700 mt-1">
+                                Budgets
+                            </h3>
+                        </div>
+
+
+                        <div class="bg-white rounded-xl border shadow-sm p-5">
+                            <p class="text-sm text-gray-500">
+                                Organize
+                            </p>
+
+                            <h3 class="text-xl font-semibold text-indigo-700 mt-1">
+                                Categories
+                            </h3>
+                        </div>
+
+
+                        <div class="bg-white rounded-xl border shadow-sm p-5">
+                            <p class="text-sm text-gray-500">
+                                Understand
+                            </p>
+
+                            <h3 class="text-xl font-semibold text-indigo-700 mt-1">
+                                Reports
+                            </h3>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CTA ================= -->
+    <section class="px-4 sm:px-6 md:px-10 py-10 md:py-14 bg-gray-50">
+
+        <div
+            class="max-w-7xl mx-auto flex flex-col lg:flex-row bg-indigo-100 px-6 py-8 md:px-10 rounded-xl justify-between items-center gap-6 text-center lg:text-left">
+
+            <div>
+
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold">
+                    Ready to Take Control of Your Expenses?
+                </h2>
+
+                <p class="font-medium text-gray-500 text-sm sm:text-base mt-2">
+                    Start managing your money smarter today.
+                </p>
+
+            </div>
+
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+
+                <a href="{% url 'login' %}"
+                    class="w-full sm:w-auto inline-flex items-center justify-center bg-indigo-600 px-6 py-3 rounded-lg text-sm font-medium text-white hover:bg-indigo-700 transition shadow-sm">
+                    Login Now
+                </a>
+
+                <a href="{% url 'register' %}"
+                    class="w-full sm:w-auto inline-flex items-center justify-center bg-white px-6 py-3 border border-gray-200 rounded-lg text-sm font-medium text-indigo-600 hover:bg-gray-50 transition shadow-sm">
+                    Create Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FOOTER ================= -->
+    <div class="footer bg-slate-900 text-white">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+                <div class="space-y-4">
+
+                    <div class="flex items-center gap-3">
+
+                        <div
+                            class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center">
+
+                            <span class="text-xl">₹</span>
+
+                        </div>
+
+                        <h3 class="text-lg font-semibold">
+                            Expense Manager
+                        </h3>
+
+                    </div>
+
+                    <p class="text-sm text-slate-300 leading-6">
+                        Smart expense tracking for better decisions,
+                        stronger habits and a more confident financial future.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h4
+                        class="text-sm font-semibold uppercase tracking-wider text-indigo-300">
+                        Company
+                    </h4>
+
+                    <ul class="mt-4 space-y-3 text-sm text-slate-300">
+
+                        <li>
+                            <a href="#" class="hover:text-white transition">
+                                About
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="hover:text-white transition">
+                                Features
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="hover:text-white transition">
+                                How it works
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4
+                        class="text-sm font-semibold uppercase tracking-wider text-indigo-300">
+                        Resources
+                    </h4>
+
+                    <ul class="mt-4 space-y-3 text-sm text-slate-300">
+
+                        <li>
+                            <a href="#" class="hover:text-white transition">
+                                Help Center
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="hover:text-white transition">
+                                Budget Tips
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="hover:text-white transition">
+                                Security
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4
+                        class="text-sm font-semibold uppercase tracking-wider text-indigo-300">
+                        Get Started
+                    </h4>
+
+                    <div class="mt-4 flex flex-wrap gap-2">
+
+                        <a href="{% url 'login' %}"
+                            class="inline-flex items-center bg-indigo-600 px-4 py-2 rounded-lg text-sm font-medium text-white hover:bg-indigo-500 transition">
+                            Login
+                        </a>
+
+                        <a href="{% url 'register' %}"
+                            class="inline-flex items-center bg-white text-slate-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">
+                            Create Account
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="mt-10 border-t border-slate-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
+
+                <p>
+                    © 2026 Expense Manager. All rights reserved.
+                </p>
+
+                <div class="flex items-center gap-6">
+
+                    <a href="#" class="hover:text-white transition">
+                        Privacy
+                    </a>
+
+                    <a href="#" class="hover:text-white transition">
+                        Terms
+                    </a>
+
+                    <a href="#" class="hover:text-white transition">
+                        Contact
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

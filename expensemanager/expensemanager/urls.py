@@ -29,6 +29,10 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     path("logout/", views.logout, name="logout"),
     path("dashboard/", views.dashboard, name="dashboard"),
+    path("features/", views.features, name="features"),
+    path("howitswork/", views.howitswork, name="howitswork"),
+    path("about/", views.about, name="about"),
+    path("contact/", views.contact, name="contact"),
 
     #category
     path("add_category/", views.add_category, name="add_category"),
